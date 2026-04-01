@@ -6,7 +6,7 @@ name: Pipeline DevSecOps
     branches: ["main"]
 
 jobs:
-  build-and-lint:
+  build-and-scan:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,5 +23,24 @@ jobs:
         with:
           dockerfile: Dockerfile
 
+      #  PARTIE 3 ---
+      # Scan des dépendances logicielles (requirements.txt)
+      - name: Scan des dependances (Trivy FS)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          scan-ref: "."
+          format: "table"
+          severity: "CRITICAL,HIGH"
+
       - name: Build de l'image Docker
         run: docker build -t mon-api-flask:latest .
+
+      # Scan de l'image Docker construite
+      - name: Scan de l'image Docker (Trivy Image)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "mon-api-flask:latest"
+          format: "table"
+          severity: "CRITICAL,HIGH"
+
