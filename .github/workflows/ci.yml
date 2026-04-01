@@ -43,4 +43,3 @@ jobs:
           image-ref: "mon-api-flask:latest"
           format: "table"
           severity: "CRITICAL,HIGH"
-
