@@ -1,31 +1,27 @@
+---
 name: Pipeline DevSecOps
 
-# Le pipeline se déclenche à chaque fois qu'on pousse du code sur la branche main
-on:
+"on":
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build-and-lint:
-    runs-on: ubuntu-latest # On utilise un serveur virtuel Ubuntu fourni par GitHub
+    runs-on: ubuntu-latest
 
     steps:
-      # Étape 1 : Récupérer le code depuis ton dépôt
       - name: Checkout du code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Étape 2 : Linter les fichiers YAML (k8s.yaml et même ce fichier ci.yml)
       - name: Linter les fichiers YAML
         uses: ibiqlik/action-yamllint@v3
         with:
-          file_or_dir: . # Analyse tous les fichiers YAML du projet
+          file_or_dir: .
 
-      # Étape 3 : Linter le Dockerfile (Optionnel mais on le fait pour avoir un bon projet !)
       - name: Linter le Dockerfile
         uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: Dockerfile
 
-      # Étape 4 : Construire l'image Docker
       - name: Build de l'image Docker
         run: docker build -t mon-api-flask:latest .

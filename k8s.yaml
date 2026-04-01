@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,7 +14,7 @@ spec:
         app: flask-api
     spec:
       containers:
-      - name: flask-api-container
-        image: mon-app-flask:latest
-        ports:
-        - containerPort: 8080
+        - name: flask-api-container
+          image: mon-app-flask:latest
+          ports:
+            - containerPort: 8080
