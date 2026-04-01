@@ -43,3 +43,13 @@ jobs:
           image-ref: "mon-api-flask:latest"
           format: "table"
           severity: "CRITICAL,HIGH"
+
+# --- NOUVEAU : PARTIE 4 ---
+      # Vérification des politiques Kubernetes avec Conftest
+      - name: Setup Conftest
+        uses: open-policy-agent/setup-conftest@v1.2.0
+        with:
+          version: "latest"
+
+      - name: Run Conftest sur k8s.yaml
+        run: conftest test k8s.yaml -p policy/deployment.rego
