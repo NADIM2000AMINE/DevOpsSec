@@ -44,12 +44,15 @@ jobs:
           format: "table"
           severity: "CRITICAL,HIGH"
 
-# --- NOUVEAU : PARTIE 4 ---
-      # Vérification des politiques Kubernetes avec Conftest
+      #      PARTIE 4
+      # Verification des politiques avec Conftest
       - name: Installer Conftest
         run: |
-          wget https://github.com/open-policy-agent/conftest/releases/download/v0.46.0/conftest_0.46.0_Linux_x86_64.tar.gz
-          tar xzf conftest_0.46.0_Linux_x86_64.tar.gz
+          URL="https://github.com/open-policy-agent/conftest"
+          VER="v0.46.0"
+          FILE="conftest_0.46.0_Linux_x86_64.tar.gz"
+          wget "$URL/releases/download/$VER/$FILE"
+          tar xzf "$FILE"
           sudo mv conftest /usr/local/bin
 
       - name: Run Conftest sur k8s.yaml
